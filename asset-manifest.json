@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "/chatting/static/css/main.d1b05096.chunk.css",
-    "main.js": "/chatting/static/js/main.1b3e877e.chunk.js",
-    "main.js.map": "/chatting/static/js/main.1b3e877e.chunk.js.map",
-    "runtime-main.js": "/chatting/static/js/runtime-main.04232867.js",
-    "runtime-main.js.map": "/chatting/static/js/runtime-main.04232867.js.map",
-    "static/js/2.e05dd83c.chunk.js": "/chatting/static/js/2.e05dd83c.chunk.js",
-    "static/js/2.e05dd83c.chunk.js.map": "/chatting/static/js/2.e05dd83c.chunk.js.map",
-    "index.html": "/chatting/index.html",
-    "precache-manifest.812f3c85882ac40c7a0031fee547d73c.js": "/chatting/precache-manifest.812f3c85882ac40c7a0031fee547d73c.js",
-    "service-worker.js": "/chatting/service-worker.js",
-    "static/css/main.d1b05096.chunk.css.map": "/chatting/static/css/main.d1b05096.chunk.css.map",
-    "static/js/2.e05dd83c.chunk.js.LICENSE": "/chatting/static/js/2.e05dd83c.chunk.js.LICENSE",
-    "static/media/logo.svg": "/chatting/static/media/logo.5d5d9eef.svg"
+    "main.css": "/chat-react/static/css/main.d1b05096.chunk.css",
+    "main.js": "/chat-react/static/js/main.11598ace.chunk.js",
+    "main.js.map": "/chat-react/static/js/main.11598ace.chunk.js.map",
+    "runtime-main.js": "/chat-react/static/js/runtime-main.db9a07d7.js",
+    "runtime-main.js.map": "/chat-react/static/js/runtime-main.db9a07d7.js.map",
+    "static/js/2.e05dd83c.chunk.js": "/chat-react/static/js/2.e05dd83c.chunk.js",
+    "static/js/2.e05dd83c.chunk.js.map": "/chat-react/static/js/2.e05dd83c.chunk.js.map",
+    "index.html": "/chat-react/index.html",
+    "precache-manifest.155df939d772bf7fd84783147e1423d3.js": "/chat-react/precache-manifest.155df939d772bf7fd84783147e1423d3.js",
+    "service-worker.js": "/chat-react/service-worker.js",
+    "static/css/main.d1b05096.chunk.css.map": "/chat-react/static/css/main.d1b05096.chunk.css.map",
+    "static/js/2.e05dd83c.chunk.js.LICENSE": "/chat-react/static/js/2.e05dd83c.chunk.js.LICENSE",
+    "static/media/logo.svg": "/chat-react/static/media/logo.5d5d9eef.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.04232867.js",
+    "static/js/runtime-main.db9a07d7.js",
     "static/js/2.e05dd83c.chunk.js",
     "static/css/main.d1b05096.chunk.css",
-    "static/js/main.1b3e877e.chunk.js"
+    "static/js/main.11598ace.chunk.js"
   ]
 }
