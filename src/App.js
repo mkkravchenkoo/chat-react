@@ -1,22 +1,45 @@
 import React, {useEffect} from 'react';
-import LoginForm from "./components";
+import LoginForm from "./components/LoginForm";
+import RegisterForm from "./components/RegisterForm";
+import Chat from "./components/Chat";
+
+import {Provider} from 'react-redux';
+import {createStore, applyMiddleware} from "redux";
+import {composeWithDevTools} from "redux-devtools-extension";
+import thunk from 'redux-thunk';
+
+import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
+import reducers from './store/reducers'
+import setAuthToken from "./utils/setAuthToken";
+import {loadUser} from "./store/actions/user";
+
+const store = createStore(reducers, composeWithDevTools(applyMiddleware(thunk)));
+
+
+if(localStorage.token){
+	setAuthToken(localStorage.token)
+}
 
 const App = () => {
 
-    useEffect(() => {
+	useEffect(() => {
+		store.dispatch(loadUser())
+	},[]);
 
-        fetch('https://radiant-taiga-91549.herokuapp.com/users')
-            .then((res) => res.json())
-            .then((res) => console.log(res))
-            .catch((e) => console.log(e))
+	return (
+		<Provider store={store}>
+			<div className="App">
+				<Router>
+					<Switch>
+						<Route path="/login" component={LoginForm}/>
+						<Route path="/register" component={RegisterForm}/>
+						<Route path="/" component={Chat}/>
+					</Switch>
+				</Router>
+			</div>
+		</Provider>
 
-    },[]);
-
-  return (
-    <div className="App">
-      <LoginForm/>
-    </div>
-  );
+	);
 }
 
 export default App;

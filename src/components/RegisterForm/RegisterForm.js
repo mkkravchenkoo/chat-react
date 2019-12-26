@@ -3,6 +3,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
+
 import Grid from '@material-ui/core/Grid';
 
 import Typography from '@material-ui/core/Typography';
@@ -14,8 +15,6 @@ import FormControl from "@material-ui/core/FormControl";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import axios from 'axios';
 import {Link} from "react-router-dom";
-import {connect} from "react-redux";
-import {loadUser} from "../../store/actions/user";
 
 
 const useStyles = makeStyles(theme => ({
@@ -38,7 +37,7 @@ const useStyles = makeStyles(theme => ({
 	},
 }));
 
-const LoginForm = (props) => {
+const RegisterForm = () => {
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const classes = useStyles();
 
@@ -52,6 +51,17 @@ const LoginForm = (props) => {
 		if (values.email && !emailRegex.test(values.email)) {
 			errors.email = 'Email is not valid';
 		}
+		if (!values.password) {
+			errors.password = 'Required';
+		}
+		if (!values.repeat_password) {
+			errors.repeat_password = 'Required';
+		}
+		if((values.password && values.repeat_password) && (values.password !== values.repeat_password)){
+			errors.password = 'Passwords are different';
+			errors.repeat_password = 'Passwords are different';
+		}
+
 
 		return errors;
 	};
@@ -61,11 +71,9 @@ const LoginForm = (props) => {
 		setIsSubmitting(true);
 		const {email, password} = values;
 		try {
-			const response = await axios.post('https://radiant-taiga-91549.herokuapp.com/auth', {email, password})
+			const response = await axios.post('https://radiant-taiga-91549.herokuapp.com/users', {email, password})
 			const {data} = response;
 			const {token} = data;
-			localStorage.setItem('token', token);
-			props.loadUser();
 
 			setIsSubmitting(false);
 		}catch (e) {
@@ -82,15 +90,12 @@ const LoginForm = (props) => {
 
 
 
-
 	return (
 		<Container component="main" maxWidth="xs">
 			<CssBaseline />
 			<div className={classes.paper}>
-				<Avatar className={classes.avatar}>
-				</Avatar>
 				<Typography component="h1" variant="h5">
-					Sign in
+					Sign Up
 				</Typography>
 				<form className={classes.form} noValidate onSubmit={handleSubmit}>
 					<FormControl fullWidth error={!!errors["email"]}>
@@ -127,6 +132,23 @@ const LoginForm = (props) => {
 						/>
 						{errors["password"] && <FormHelperText>{errors["password"]}</FormHelperText>}
 					</FormControl>
+					<FormControl fullWidth error={!!errors["repeat_password"]}>
+						<TextField
+							variant="outlined"
+							margin="normal"
+							required
+							fullWidth
+							name="repeat_password"
+							label="Repeat password"
+							type="password"
+							id="repeat_password"
+							error={!!errors["repeat_password"]}
+							onChange={(e) => handleChange(e.target.name, e.target.value)}
+							autoComplete="current-password"
+							value={values["repeat_password"] ? values["repeat_password"] : ""}
+						/>
+						{errors["repeat_password"] && <FormHelperText>{errors["repeat_password"]}</FormHelperText>}
+					</FormControl>
 
 					{!isSubmitting ? (
 						<Button
@@ -143,8 +165,8 @@ const LoginForm = (props) => {
 					)}
 					<Grid container>
 						<Grid item>
-							<Link to="/register">
-								{"Don't have an account? Sign Up"}
+							<Link to="/login">
+								{"Have an account? Sign Up"}
 							</Link>
 						</Grid>
 					</Grid>
@@ -155,7 +177,4 @@ const LoginForm = (props) => {
 	);
 }
 
-export default connect(
-	null,
-	{loadUser}
-)(LoginForm)
+export default RegisterForm
