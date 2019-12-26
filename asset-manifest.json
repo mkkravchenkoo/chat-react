@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.js": "/chat-react/static/js/main.d6bf18e7.chunk.js",
-    "main.js.map": "/chat-react/static/js/main.d6bf18e7.chunk.js.map",
+    "main.js": "/chat-react/static/js/main.2e59a78c.chunk.js",
+    "main.js.map": "/chat-react/static/js/main.2e59a78c.chunk.js.map",
     "runtime-main.js": "/chat-react/static/js/runtime-main.db9a07d7.js",
     "runtime-main.js.map": "/chat-react/static/js/runtime-main.db9a07d7.js.map",
-    "static/js/2.829c0e41.chunk.js": "/chat-react/static/js/2.829c0e41.chunk.js",
-    "static/js/2.829c0e41.chunk.js.map": "/chat-react/static/js/2.829c0e41.chunk.js.map",
+    "static/js/2.414e91fc.chunk.js": "/chat-react/static/js/2.414e91fc.chunk.js",
+    "static/js/2.414e91fc.chunk.js.map": "/chat-react/static/js/2.414e91fc.chunk.js.map",
     "index.html": "/chat-react/index.html",
-    "precache-manifest.8deaac07623d9cd8669b311baec9c931.js": "/chat-react/precache-manifest.8deaac07623d9cd8669b311baec9c931.js",
+    "precache-manifest.6f14568a682ec652d3cc8e142657e8da.js": "/chat-react/precache-manifest.6f14568a682ec652d3cc8e142657e8da.js",
     "service-worker.js": "/chat-react/service-worker.js",
-    "static/js/2.829c0e41.chunk.js.LICENSE": "/chat-react/static/js/2.829c0e41.chunk.js.LICENSE"
+    "static/js/2.414e91fc.chunk.js.LICENSE": "/chat-react/static/js/2.414e91fc.chunk.js.LICENSE"
   },
   "entrypoints": [
     "static/js/runtime-main.db9a07d7.js",
-    "static/js/2.829c0e41.chunk.js",
-    "static/js/main.d6bf18e7.chunk.js"
+    "static/js/2.414e91fc.chunk.js",
+    "static/js/main.2e59a78c.chunk.js"
   ]
 }
