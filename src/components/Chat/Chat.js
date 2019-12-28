@@ -75,7 +75,22 @@ const Chat = (props) => {
 	};
 
 	const submit = async () => {
-		console.log(values)
+		const {message} = values;
+		try {
+			const response = await axios.post(`/messages`, {message});
+			console.log(response)
+		}catch (e) {
+			if(e.response && e.response.data){
+				setServerErrors({
+					message:e.response.data
+				})
+			}else{
+				setServerErrors({
+					message:e.message
+				})
+			}
+
+		}
 	}
 
 
@@ -157,5 +172,5 @@ const mapStateTotProps = (state) => {
 	}
 }
 export default connect(
-	mapStateTotProps
+	mapStateTotProps,
 )(Chat);

@@ -5,27 +5,43 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Typography from "@material-ui/core/Typography";
 import ListItem from "@material-ui/core/ListItem";
 import Divider from "@material-ui/core/Divider";
+import UserAvatar from "../UserAvatar";
 
-const MessageItem = () => {
+const MessageItem = ({msg}) => {
+	const {user, message, date} = msg;
+	const {email} = user;
+	const msgDate = new Date(date);
+
+	const dateStr = `${msgDate.getFullYear()}-${msgDate.getMonth() < 10 ? `0${msgDate.getMonth()}` : msgDate.getMonth()}-${msgDate.getDate() < 10 ? `0${msgDate.getDate()}` : msgDate.getDate()}, 
+	${msgDate.getHours() < 10 ? `0${msgDate.getHours()}` : msgDate.getHours()}:${msgDate.getMinutes() < 10 ? `0${msgDate.getMinutes()}` : msgDate.getMinutes()}:${msgDate.getSeconds() < 10 ? `0${msgDate.getSeconds()}` : msgDate.getSeconds()}`;
 	return (
 		<>
 			<ListItem alignItems="flex-start">
 				<ListItemAvatar>
-					<Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+					<UserAvatar letters={`${email[0]}${email[1]}`}/>
 				</ListItemAvatar>
 				<ListItemText
-					primary="Brunch this weekend?"
+					primary={
+						<div style={{display:"flex", justifyContent:"space-between"}}>
+							<Typography component="span" variant="body2" color="textPrimary">
+								{email}
+							</Typography>
+							<Typography component="span" variant="body2" color="textPrimary">
+								{dateStr}
+							</Typography>
+
+						</div>
+					}
 					secondary={
 						<React.Fragment>
 							<Typography
 								component="span"
 								variant="body2"
-								// className={classes.inline}
 								color="textPrimary"
 							>
-								Ali Connors
+
 							</Typography>
-							{" — I'll be in your neighborhood doing errands this…"}
+							{message}
 						</React.Fragment>
 					}
 				/>
