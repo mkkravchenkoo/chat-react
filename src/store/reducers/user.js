@@ -1,4 +1,4 @@
-import {USER_LOGIN_SUCCESS, USER_LOGIN_FAIL} from "../actions/actionTypes";
+import {USER_LOGIN_SUCCESS, USER_LOGIN_FAIL, USER_LOGOUT} from "../actions/actionTypes";
 
 const initialState = {
 	isAuthenticated:false
@@ -14,9 +14,11 @@ const user = (state=initialState, action) => {
 				isAuthenticated:true,
 				...payload
 			}
+		case USER_LOGOUT :
 		case USER_LOGIN_FAIL :
+			localStorage.removeItem('token');
 			return {
-				...state,
+				...initialState,
 				isAuthenticated:false
 			}
 	}

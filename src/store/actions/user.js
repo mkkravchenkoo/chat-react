@@ -1,4 +1,4 @@
-import {USER_LOGIN_SUCCESS, USER_LOGIN_FAIL} from "./actionTypes";
+import {USER_LOGIN_SUCCESS, USER_LOGIN_FAIL, USER_LOGOUT} from "./actionTypes";
 import setAuthToken from "../../utils/setAuthToken";
 import axios from 'axios'
 
@@ -21,6 +21,13 @@ const loadUser = () => async dispatch => {
 	}
 }
 
+const userLogOut = () => dispatch => {
+	dispatch({
+		type: USER_LOGOUT,
+	})
+}
+
 export {
-	loadUser
+	loadUser,
+	userLogOut
 }

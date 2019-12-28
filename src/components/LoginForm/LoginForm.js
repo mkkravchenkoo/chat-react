@@ -1,26 +1,22 @@
 import React, {useState} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import Grid from '@material-ui/core/Grid';
-
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
 import useForm from "../../hooks/useForm";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import axios from 'axios';
-import {Link} from "react-router-dom";
 import {connect} from "react-redux";
 import {loadUser} from "../../store/actions/user";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogActions from "@material-ui/core/DialogActions";
 
 
 const useStyles = makeStyles(theme => ({
 	paper: {
-		marginTop: theme.spacing(8),
 		display: 'flex',
 		flexDirection: 'column',
 		alignItems: 'center',
@@ -30,7 +26,7 @@ const useStyles = makeStyles(theme => ({
 		backgroundColor: theme.palette.secondary.main,
 	},
 	form: {
-		width: '100%', // Fix IE 11 issue.
+		width: '100%',
 		marginTop: theme.spacing(1),
 	},
 	submit: {
@@ -48,6 +44,9 @@ const LoginForm = (props) => {
 
 		if (!values.email) {
 			errors.email = 'Required';
+		}
+		if (!values.password) {
+			errors.password = 'Required';
 		}
 		if (values.email && !emailRegex.test(values.email)) {
 			errors.email = 'Email is not valid';
@@ -81,77 +80,71 @@ const LoginForm = (props) => {
 	);
 
 
-
-
 	return (
-		<Container component="main" maxWidth="xs">
-			<CssBaseline />
-			<div className={classes.paper}>
-				<Avatar className={classes.avatar}>
-				</Avatar>
-				<Typography component="h1" variant="h5">
-					Sign in
-				</Typography>
-				<form className={classes.form} noValidate onSubmit={handleSubmit}>
-					<FormControl fullWidth error={!!errors["email"]}>
-						<TextField
-							variant="outlined"
-							margin="normal"
-							required
-							fullWidth
-							id="email"
-							onChange={(e) => handleChange(e.target.name, e.target.value)}
-							label="Email Address"
-							name="email"
-							autoComplete="email"
-							autoFocus
-							error={!!errors["email"]}
-							value={values["email"] ? values["email"] : ""}
-						/>
-						{errors["email"] && <FormHelperText>{errors["email"]}</FormHelperText>}
-					</FormControl>
-					<FormControl fullWidth error={!!errors["password"]}>
-						<TextField
-							variant="outlined"
-							margin="normal"
-							required
-							fullWidth
-							name="password"
-							label="Password"
-							type="password"
-							id="password"
-							error={!!errors["password"]}
-							onChange={(e) => handleChange(e.target.name, e.target.value)}
-							autoComplete="current-password"
-							value={values["password"] ? values["password"] : ""}
-						/>
-						{errors["password"] && <FormHelperText>{errors["password"]}</FormHelperText>}
-					</FormControl>
+		<>
+			<DialogContent>
+				<div className={classes.paper}>
+					<Avatar className={classes.avatar}/>
+					<Typography component="h1" variant="h5">
+						Sign in
+					</Typography>
+					<form className={classes.form} noValidate onSubmit={handleSubmit}>
+						<FormControl fullWidth error={!!errors["email"]}>
+							<TextField
+								variant="outlined"
+								margin="normal"
+								required
+								fullWidth
+								id="email"
+								onChange={(e) => handleChange(e.target.name, e.target.value)}
+								label="Email Address"
+								name="email"
+								autoComplete="email"
+								autoFocus
+								error={!!errors["email"]}
+								value={values["email"] ? values["email"] : ""}
+							/>
+							{errors["email"] && <FormHelperText>{errors["email"]}</FormHelperText>}
+						</FormControl>
+						<FormControl fullWidth error={!!errors["password"]}>
+							<TextField
+								variant="outlined"
+								margin="normal"
+								required
+								fullWidth
+								name="password"
+								label="Password"
+								type="password"
+								id="password"
+								error={!!errors["password"]}
+								onChange={(e) => handleChange(e.target.name, e.target.value)}
+								autoComplete="current-password"
+								value={values["password"] ? values["password"] : ""}
+							/>
+							{errors["password"] && <FormHelperText>{errors["password"]}</FormHelperText>}
+						</FormControl>
+					</form>
+				</div>
+			</DialogContent>
+			<DialogActions>
+				{!isSubmitting ? (
+					<Button
+						type="submit"
+						fullWidth
+						variant="contained"
+						color="primary"
+						className={classes.submit}
+						onClick={handleSubmit}
+						size="large"
+					>
+						Sign In
+					</Button>
+				) : (
+					<CircularProgress />
+				)}
+			</DialogActions>
 
-					{!isSubmitting ? (
-						<Button
-							type="submit"
-							fullWidth
-							variant="contained"
-							color="primary"
-							className={classes.submit}
-						>
-							Sign In
-						</Button>
-					) : (
-						<CircularProgress />
-					)}
-					<Grid container>
-						<Grid item>
-							<Link to="/register">
-								{"Don't have an account? Sign Up"}
-							</Link>
-						</Grid>
-					</Grid>
-				</form>
-			</div>
-
-		</Container>
+		</>
 	);
 }
 
