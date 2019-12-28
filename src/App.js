@@ -9,9 +9,7 @@ import thunk from 'redux-thunk';
 import reducers from './store/reducers'
 import setAuthToken from "./utils/setAuthToken";
 import {loadUser} from "./store/actions/user";
-import LoginRegisterPopup from "./components/LoginRegisterPopup";
-import LoginButton from "./components/LoginButton";
-import LogoutButton from "./components/LogoutButton";
+import CssBaseline from "@material-ui/core/CssBaseline";
 
 const store = createStore(reducers, composeWithDevTools(applyMiddleware(thunk)));
 
@@ -22,19 +20,19 @@ if(localStorage.token){
 
 const App = () => {
 
+	const [isUserLoading, setIsUserLoading] = useState(true);
 	useEffect(() => {
-		store.dispatch(loadUser())
+		(async () => {
+			await store.dispatch(loadUser());
+			setIsUserLoading(false);
+		})();
 	},[]);
-
-	const [openLoginPopup, setOpenLoginPopup] = useState(false);
 
 	return (
 		<Provider store={store}>
 			<div className="App">
-				<Chat/>
-				<LoginButton setOpenLoginPopup={setOpenLoginPopup}/>
-				<LogoutButton/>
-				<LoginRegisterPopup open={openLoginPopup} setOpen={setOpenLoginPopup}/>
+				<CssBaseline />
+				<Chat isUserLoading={isUserLoading}/>
 			</div>
 		</Provider>
 

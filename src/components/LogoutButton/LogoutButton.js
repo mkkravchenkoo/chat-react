@@ -7,7 +7,7 @@ const LogoutButton = ({isAuthenticated, userLogOut}) => {
 	return (
 		<>
 			{isAuthenticated && (
-				<Button variant="outlined" color="primary" onClick={userLogOut}>
+				<Button variant="outlined" color="secondary" onClick={userLogOut}>
 					Log out
 				</Button>
 			) }
