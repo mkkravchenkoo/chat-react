@@ -70,7 +70,7 @@ const RegisterForm = (props) => {
 		setIsSubmitting(true);
 		const {email, password} = values;
 		try {
-			const response = await axios.post('https://radiant-taiga-91549.herokuapp.com/users', {email, password})
+			const response = await axios.post('/users', {email, password})
 			const {data} = response;
 			const {token} = data;
 			setIsSubmitting(false);

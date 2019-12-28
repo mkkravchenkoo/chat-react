@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import axios from 'axios';
 import Chat from "./components/Chat";
 
 import {Provider} from 'react-redux';
@@ -13,6 +14,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 
 const store = createStore(reducers, composeWithDevTools(applyMiddleware(thunk)));
 
+axios.defaults.baseURL = 'https://radiant-taiga-91549.herokuapp.com';
 
 if(localStorage.token){
 	setAuthToken(localStorage.token)

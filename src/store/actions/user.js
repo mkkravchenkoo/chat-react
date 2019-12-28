@@ -7,7 +7,7 @@ const loadUser = () => async dispatch => {
 		setAuthToken(localStorage.token)
 	}
 	try {
-		const res = await axios.get('https://radiant-taiga-91549.herokuapp.com/users/me');
+		const res = await axios.get('/users/me');
 
 		dispatch({
 			type: USER_LOGIN_SUCCESS,

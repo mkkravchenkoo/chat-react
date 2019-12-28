@@ -60,7 +60,7 @@ const LoginForm = (props) => {
 		setIsSubmitting(true);
 		const {email, password} = values;
 		try {
-			const response = await axios.post('https://radiant-taiga-91549.herokuapp.com/auth', {email, password})
+			const response = await axios.post('/auth', {email, password})
 			const {data} = response;
 			const {token} = data;
 			localStorage.setItem('token', token);
