@@ -23,10 +23,12 @@ const useStyles = makeStyles(theme => ({
 		width: '100%',
 		maxWidth: 360,
 		backgroundColor: theme.palette.background.paper,
-		margin:"0 auto"
+		margin:"0 auto",
+		height:"100%"
 	},
 	paper: {
 		paddingBottom: 50,
+		boxShadow:"none"
 	},
 	appBar: {
 		top: 'auto',
