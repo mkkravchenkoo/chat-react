@@ -3,7 +3,8 @@ import {
 	// MESSAGE_SEND_SUCCESS,
 	// MESSAGE_SEND_FAIL,
 	// MESSAGES_FETCH_FAIL,
-	MESSAGES_LOAD_MORE_SUCCESS
+	MESSAGES_LOAD_MORE_SUCCESS,
+	MESSAGE_NEW
 } from "../actions/actionTypes";
 
 const initialState = {
@@ -20,6 +21,14 @@ const messages = (state=initialState, action) => {
 				...state,
 				...payload,
 				items:payload.items.reverse()
+			}
+		case MESSAGE_NEW :
+			return {
+				...state,
+				items:[
+					...state.items,
+					payload
+				]
 			}
 		case MESSAGES_LOAD_MORE_SUCCESS :
 			return {

@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import List from '@material-ui/core/List';
 import MessageItem from "../MessageItem";
 import {connect} from "react-redux";
-import {getMessages} from '../../store/actions/message'
+import {getMessages, newMessages} from '../../store/actions/message'
 import SkeletonMessage from "../SkeletonMessage";
 import ListItem from "@material-ui/core/ListItem";
 import Button from "@material-ui/core/Button";
@@ -12,8 +12,8 @@ import axios from "axios";
 import {updateOnlineUsers} from "../../store/actions/user";
 
 const MessageList = (props) => {
-
-	const {getMessages, messages, user, updateOnlineUsers} = props;
+	const socket = io(axios.defaults.baseURL);
+	const {getMessages, messages, user, updateOnlineUsers, newMessages, executeScroll} = props;
 	const {items, total, page} = messages;
 	const [isLoading, setIsLoading] = useState(false);
 	const [isLoadingMore, setIsLoadingMore] = useState(false);
@@ -28,21 +28,26 @@ const MessageList = (props) => {
 	},[]);
 
 	useEffect(() => {
-
-		const socket = io(axios.defaults.baseURL);
 		socket.on('connect', function(){
 			socket.emit('online user', isAuthenticated ? _id : null);
 		});
+	}, [user.isAuthenticated]);
+
+	useEffect(() => {
 
 		socket.on('online users', (data) => {
 			updateOnlineUsers(data.online);
 		});
 
-	}, [user.isAuthenticated]);
+		socket.on('new message', (data) => {
+			newMessages(data.message);
+			executeScroll();
+		});
+	},[]);
 
 	const loadMore = async () => {
 		setIsLoadingMore(true);
-		await getMessages(page+1);
+		await getMessages(items.length);
 		setIsLoadingMore(false)
 	}
 
@@ -91,5 +96,5 @@ const mapStateToProps = ({messages}) => {
 
 export default connect(
 	mapStateToProps,
-	{getMessages, updateOnlineUsers}
+	{getMessages, updateOnlineUsers, newMessages}
 )(MessageList);

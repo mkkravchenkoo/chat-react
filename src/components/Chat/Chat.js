@@ -16,6 +16,8 @@ import useForm from "../../hooks/useForm";
 import axios from "axios";
 import FormControl from "@material-ui/core/FormControl";
 import FormHelperText from "@material-ui/core/FormHelperText";
+import io from "socket.io-client";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -55,6 +57,8 @@ const Chat = (props) => {
 	const {user, isUserLoading} = props;
 	const {email, isAuthenticated} = user;
 
+	const [isMessageSending, setIsMessageSending] = useState(false);
+
 	const myRef = useRef(null);
 
 	const executeScroll = () => {
@@ -75,9 +79,13 @@ const Chat = (props) => {
 
 	const submit = async () => {
 		const {message} = values;
+		setIsMessageSending(true);
 		try {
 			const response = await axios.post(`/messages`, {message});
-			console.log(response)
+			handleChange("message", "");
+			const socket = io(axios.defaults.baseURL);
+			socket.emit('message add', response.data.message);
+			setIsMessageSending(false);
 		}catch (e) {
 			if(e.response && e.response.data){
 				setServerErrors({
@@ -88,6 +96,7 @@ const Chat = (props) => {
 					message:e.message
 				})
 			}
+			setIsMessageSending(false);
 
 		}
 	}
@@ -137,7 +146,7 @@ const Chat = (props) => {
 				</Toolbar>
 			</AppBar>
 			<Paper square className={classes.paper}>
-				<MessageList user={user}/>
+				<MessageList user={user} executeScroll={executeScroll}/>
 				<div ref={myRef}/>
 			</Paper>
 			<AppBar position="fixed" color="inherit" className={classes.appBar}>
@@ -155,7 +164,7 @@ const Chat = (props) => {
 						{errors["message"] && <FormHelperText>{errors["message"]}</FormHelperText>}
 					</FormControl>
 					<Button variant="contained" color="primary" onClick={handleSubmit}>
-						Send
+						{isMessageSending ?  <CircularProgress color="inherit" size={20}/> : "Send"}
 					</Button>
 				</Toolbar>
 			</AppBar>

@@ -30,6 +30,7 @@ const updateOnlineUsers = (users) => async dispatch => {
 }
 
 const userLogOut = (userId) => dispatch => {
+	delete axios.defaults.headers.common['Authorization'];
 	const socket = io(axios.defaults.baseURL);
 	socket.emit('user logout', userId);
 	dispatch({
