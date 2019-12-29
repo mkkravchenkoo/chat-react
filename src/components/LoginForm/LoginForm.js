@@ -126,7 +126,7 @@ const LoginForm = (props) => {
 					</form>
 				</div>
 			</DialogContent>
-			<DialogActions>
+			<DialogActions style={{justifyContent:"center"}}>
 				{!isSubmitting ? (
 					<Button
 						type="submit"
