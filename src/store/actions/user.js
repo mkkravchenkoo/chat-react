@@ -1,6 +1,7 @@
-import {USER_LOGIN_SUCCESS, USER_LOGIN_FAIL, USER_LOGOUT} from "./actionTypes";
+import {USER_LOGIN_SUCCESS, USER_LOGIN_FAIL, USER_LOGOUT, ONLINE_USERS} from "./actionTypes";
 import setAuthToken from "../../utils/setAuthToken";
 import axios from 'axios'
+import io from "socket.io-client";
 
 const loadUser = () => async dispatch => {
 	if (localStorage.token) {
@@ -21,7 +22,16 @@ const loadUser = () => async dispatch => {
 	}
 }
 
-const userLogOut = () => dispatch => {
+const updateOnlineUsers = (users) => async dispatch => {
+	dispatch({
+		type: ONLINE_USERS,
+		payload: users
+	})
+}
+
+const userLogOut = (userId) => dispatch => {
+	const socket = io(axios.defaults.baseURL);
+	socket.emit('user logout', userId);
 	dispatch({
 		type: USER_LOGOUT,
 	})
@@ -29,5 +39,6 @@ const userLogOut = () => dispatch => {
 
 export {
 	loadUser,
-	userLogOut
+	userLogOut,
+	updateOnlineUsers
 }

@@ -1,7 +1,8 @@
-import {USER_LOGIN_SUCCESS, USER_LOGIN_FAIL, USER_LOGOUT} from "../actions/actionTypes";
+import {USER_LOGIN_SUCCESS, USER_LOGIN_FAIL, USER_LOGOUT, ONLINE_USERS} from "../actions/actionTypes";
 
 const initialState = {
-	isAuthenticated:false
+	isAuthenticated:false,
+	onlineUsers:[]
 };
 
 const user = (state=initialState, action) => {
@@ -13,6 +14,11 @@ const user = (state=initialState, action) => {
 				...state,
 				isAuthenticated:true,
 				...payload
+			}
+		case ONLINE_USERS :
+			return {
+				...state,
+				onlineUsers:payload
 			}
 		case USER_LOGOUT :
 		case USER_LOGIN_FAIL :

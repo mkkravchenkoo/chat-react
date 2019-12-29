@@ -3,20 +3,22 @@ import List from '@material-ui/core/List';
 import MessageItem from "../MessageItem";
 import {connect} from "react-redux";
 import {getMessages} from '../../store/actions/message'
-import Skeleton from "@material-ui/lab/Skeleton";
 import SkeletonMessage from "../SkeletonMessage";
 import ListItem from "@material-ui/core/ListItem";
 import Button from "@material-ui/core/Button";
-import LinearProgress from "@material-ui/core/LinearProgress";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import io from "socket.io-client";
+import axios from "axios";
+import {updateOnlineUsers} from "../../store/actions/user";
 
 const MessageList = (props) => {
 
-	const {getMessages, messages} = props;
+	const {getMessages, messages, user, updateOnlineUsers} = props;
 	const {items, total, page} = messages;
 	const [isLoading, setIsLoading] = useState(false);
 	const [isLoadingMore, setIsLoadingMore] = useState(false);
 
+	const {isAuthenticated, _id, onlineUsers} = user;
 	useEffect(() => {
 		setIsLoading(true);
 		(async () => {
@@ -24,6 +26,19 @@ const MessageList = (props) => {
 			setIsLoading(false);
 		})()
 	},[]);
+
+	useEffect(() => {
+
+		const socket = io(axios.defaults.baseURL);
+		socket.on('connect', function(){
+			socket.emit('online user', isAuthenticated ? _id : null);
+		});
+
+		socket.on('online users', (data) => {
+			updateOnlineUsers(data.online);
+		});
+
+	}, [user.isAuthenticated]);
 
 	const loadMore = async () => {
 		setIsLoadingMore(true);
@@ -56,10 +71,10 @@ const MessageList = (props) => {
 							)}
 
 						</ListItem>
-					) : <ListItem>No messages....</ListItem>}
+					) : null}
 
 					{items.length > 0 && items.map((msg) => {
-						return <MessageItem key={msg._id} msg={msg}/>
+						return <MessageItem key={msg._id} msg={msg} onlineUsers={onlineUsers}/>
 					})}
 				</>
 			)}
@@ -70,11 +85,11 @@ const MessageList = (props) => {
 
 const mapStateToProps = ({messages}) => {
 	return {
-		messages
+		messages,
 	}
 }
 
 export default connect(
 	mapStateToProps,
-	{getMessages}
+	{getMessages, updateOnlineUsers}
 )(MessageList);

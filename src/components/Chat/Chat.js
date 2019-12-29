@@ -1,6 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
 import MessageList from "../MessageList";
-import Typography from "@material-ui/core/Typography";
 import Toolbar from "@material-ui/core/Toolbar";
 import AppBar from "@material-ui/core/AppBar";
 import {makeStyles} from "@material-ui/core";
@@ -138,7 +137,7 @@ const Chat = (props) => {
 				</Toolbar>
 			</AppBar>
 			<Paper square className={classes.paper}>
-				<MessageList/>
+				<MessageList user={user}/>
 				<div ref={myRef}/>
 			</Paper>
 			<AppBar position="fixed" color="inherit" className={classes.appBar}>
